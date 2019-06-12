@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
-import sys,getopt,datetime,codecs
+import sys,getopt,codecs
+
+
 if sys.version_info[0] < 3:
     import got
 else:
     import got3 as got
+
 
 def main(argv):
 
@@ -13,16 +16,18 @@ def main(argv):
 
 	if len(argv) == 1 and argv[0] == '-h':
 		f = open('exporter_help_text.txt', 'r')
-		print f.read()
+		print(f.read())
 		f.close()
 
 		return
 
 	try:
+		outputFileName = "output_got.csv"
+		outputFile = None
+		
 		opts, args = getopt.getopt(argv, "", ("username=", "near=", "within=", "since=", "until=", "querysearch=", "toptweets", "maxtweets=", "output="))
 
 		tweetCriteria = got.manager.TweetCriteria()
-		outputFileName = "output_got.csv"
 
 		for opt,arg in opts:
 			if opt == '--username':
@@ -49,9 +54,6 @@ def main(argv):
 			elif opt == '--within':
 				tweetCriteria.within = '"' + arg + '"'
 
-			elif opt == '--within':
-				tweetCriteria.within = '"' + arg + '"'
-
 			elif opt == '--output':
 				outputFileName = arg
 				
@@ -69,11 +71,13 @@ def main(argv):
 
 		got.manager.TweetManager.getTweets(tweetCriteria, receiveBuffer)
 
-	except arg:
-		print('Arguments parser error, try -h' + arg)
+	except Exception as e:
+		print('Arguments parser error, try -h', e)
 	finally:
-		outputFile.close()
+		if outputFile:
+			outputFile.close()
 		print('Done. Output file generated "%s".' % outputFileName)
+
 
 if __name__ == '__main__':
 	main(sys.argv[1:])
