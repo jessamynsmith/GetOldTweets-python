@@ -95,3 +95,23 @@ pip install -r requirements.txt
 ```
     python Exporter.py --username "barackobama" --maxtweets 10 --toptweets
 ```
+
+- Get tweets by username, dates, and query term
+```
+    python Exporter.py --username larashah17 --since 2019-06-11 --until 2019-06-12 --querysearch agent
+```
+
+- Get tweets by username with multiple search terms
+```
+    python Exporter.py --username larashah17 --querysearch "agent ready"
+```
+
+- Get tweets by dates and hashtag
+```
+    python Exporter.py --since 2019-06-10 --until 2019-06-12 --querysearch "#bestday"
+```
+
+- Get tweets by dates, hashtag, and location
+```
+    python Exporter.py --since 2019-06-11 --until 2019-06-12 --querysearch "#bestday" --near la --within 15mi
+```
